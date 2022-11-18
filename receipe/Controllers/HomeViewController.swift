@@ -195,12 +195,13 @@ extension HomeViewController {
                 $0.trailingAnchor.constraint(equalTo: recipesStack.trailingAnchor, constant: 0)
             ])
             $0.isUserInteractionEnabled = true
-            $0.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.cellTapped)))
+            $0.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.cellTapped(_:))))
         }
        
     }
     
-    @objc func cellTapped() {
+    @objc func cellTapped(_ sender: UITapGestureRecognizer) {
+        print(sender)
         print(true)
     }
 
