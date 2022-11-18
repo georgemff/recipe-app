@@ -62,10 +62,10 @@ class Trends: UIView {
         trendDetails.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            trendDetails.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 30),
+            trendDetails.topAnchor.constraint(equalTo: self.bottomAnchor, constant: -50),
             trendDetails.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 25),
             trendDetails.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -25),
-            trendDetails.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.4)
+            trendDetails.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 50)
         ])
 
         

@@ -20,7 +20,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let window = UIWindow(windowScene: windowScene)
         if Auth().isAuth {
-            window.rootViewController = TabBar()
+            window.rootViewController = CustomTabBarController()
             
         } else {
             window.rootViewController = HomeViewController()
