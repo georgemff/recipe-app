@@ -15,6 +15,7 @@ class CustomTabBarController: UITabBarController {
         delegate = self
         view.backgroundColor = .white
         UITabBar.appearance().barTintColor = .white
+        UITabBar.appearance().backgroundColor = .white
         
         setUpVCs()
         
