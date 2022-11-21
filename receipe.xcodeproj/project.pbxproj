@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5E41DC1D292C266200587541 /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E41DC1C292C266200587541 /* AuthViewController.swift */; };
 		5EA63192292437F30097049B /* Trends.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EA63191292437F30097049B /* Trends.swift */; };
 		5EA63194292594CE0097049B /* CustomTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EA63193292594CE0097049B /* CustomTabBar.swift */; };
 		5EADB99B292038B7004E2F47 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EADB99A292038B7004E2F47 /* ProfileViewController.swift */; };
@@ -23,6 +24,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5E41DC1C292C266200587541 /* AuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewController.swift; sourceTree = "<group>"; };
 		5EA63191292437F30097049B /* Trends.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Trends.swift; sourceTree = "<group>"; };
 		5EA63193292594CE0097049B /* CustomTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBar.swift; sourceTree = "<group>"; };
 		5EADB99A292038B7004E2F47 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
@@ -54,9 +56,11 @@
 		5ECC9B3B2921A5E200518A4B /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				5EADB99C29203936004E2F47 /* CustomTabBarController.swift */,
 				5ED0ED202919AC8F00C61CB4 /* HomeViewController.swift */,
 				5EADB99A292038B7004E2F47 /* ProfileViewController.swift */,
 				5EEAC79A2922D35200A8D72C /* LoginRegisterViewController.swift */,
+				5E41DC1C292C266200587541 /* AuthViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -64,6 +68,7 @@
 		5ECC9B3C2921A62F00518A4B /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				5EA63193292594CE0097049B /* CustomTabBar.swift */,
 				5ECC9B3D2921A64100518A4B /* RecipeCell.swift */,
 				5EEAC7952922C97F00A8D72C /* AuthorizationButton.swift */,
 				5EA63191292437F30097049B /* Trends.swift */,
@@ -95,11 +100,9 @@
 				5ED0ED1C2919AC8F00C61CB4 /* AppDelegate.swift */,
 				5ED0ED1E2919AC8F00C61CB4 /* SceneDelegate.swift */,
 				5ECC9B3B2921A5E200518A4B /* Controllers */,
-				5EADB99C29203936004E2F47 /* CustomTabBarController.swift */,
 				5ED0ED252919AC9000C61CB4 /* Assets.xcassets */,
 				5ED0ED272919AC9000C61CB4 /* LaunchScreen.storyboard */,
 				5ED0ED2A2919AC9000C61CB4 /* Info.plist */,
-				5EA63193292594CE0097049B /* CustomTabBar.swift */,
 			);
 			path = receipe;
 			sourceTree = "<group>";
@@ -186,6 +189,7 @@
 				5EA63192292437F30097049B /* Trends.swift in Sources */,
 				5ED0ED1D2919AC8F00C61CB4 /* AppDelegate.swift in Sources */,
 				5EA63194292594CE0097049B /* CustomTabBar.swift in Sources */,
+				5E41DC1D292C266200587541 /* AuthViewController.swift in Sources */,
 				5EADB99B292038B7004E2F47 /* ProfileViewController.swift in Sources */,
 				5ECC9B3E2921A64100518A4B /* RecipeCell.swift in Sources */,
 				5EADB99D29203936004E2F47 /* CustomTabBarController.swift in Sources */,

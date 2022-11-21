@@ -28,34 +28,21 @@ class HomeViewController: UIViewController {
         
         view.addSubview(stackView)
         
-        if !Auth().isAuth {
-            let authBtn = AuthorizationButton()
-            view.addSubview(authBtn)
-            authBtn.translatesAutoresizingMaskIntoConstraints = false
-            NSLayoutConstraint.activate([
-                authBtn.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.05),
-                authBtn.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
-                authBtn.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -10),
-                authBtn.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20)
-            ])
-            authBtn.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(logInOrRegister)))
-            stackView.bottomAnchor.constraint(equalTo: authBtn.topAnchor).isActive = true
-        } else {
-            stackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
-        }
-        
         
         stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.topAnchor.constraint(equalTo: topViewSearchBackground.bottomAnchor, constant: 0).isActive = true
-        stackView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 10).isActive = true
-        stackView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -10).isActive = true
+        NSLayoutConstraint.activate([
+            stackView.topAnchor.constraint(equalTo: topViewSearchBackground.bottomAnchor, constant: 0),
+            stackView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
+            stackView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -10),
+            stackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+        ])
         
         
         stackView.alignment = .fill
         stackView.distribution = .fillEqually
         stackView.axis = .vertical
         stackView.spacing = 70
-    
+        
         
         setUpTrends()
         setUpHotRecipes()
@@ -116,7 +103,7 @@ extension HomeViewController {
         view.addSubview(imageView)
         searchBar.searchTextField.rightView = imageView
         searchBar.searchTextField.rightViewMode = UITextField.ViewMode.always
-    
+        
     }
     
     
@@ -170,7 +157,7 @@ extension HomeViewController {
         ])
         let recipesStack = UIStackView()
         recipesView.addSubview(recipesStack)
-
+        
         recipesStack.translatesAutoresizingMaskIntoConstraints = false
         recipesStack.axis = .vertical
         recipesStack.distribution = .fillEqually
@@ -189,7 +176,7 @@ extension HomeViewController {
             RecipeCell(image: "pasta", title: "Pasta", description: "Some Pasta Recipe Description"),
             RecipeCell(image: "pizza", title: "Pizza", description: "Some Pizza Recipe Description")
         ].forEach{recipesStack.addArrangedSubview($0)}
-
+        
         recipesStack.arrangedSubviews.forEach {
             NSLayoutConstraint.activate([
                 $0.leadingAnchor.constraint(equalTo: recipesStack.leadingAnchor, constant: 0),
@@ -198,14 +185,14 @@ extension HomeViewController {
             $0.isUserInteractionEnabled = true
             $0.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.cellTapped(_:))))
         }
-       
+        
     }
     
     @objc func cellTapped(_ sender: UITapGestureRecognizer) {
         print(sender)
         print(true)
     }
-
+    
     
     func createViewTitleLabel(title: String) -> UILabel {
         let titleLabel = UILabel()

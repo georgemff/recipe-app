@@ -19,12 +19,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         
         let window = UIWindow(windowScene: windowScene)
-        if Auth().isAuth {
+//        if Auth().isAuth {
             window.rootViewController = CustomTabBarController()
-            
-        } else {
-            window.rootViewController = HomeViewController()
-        }
+//
+//        } else {
+//            window.rootViewController = HomeViewController()
+//        }
         self.window = window
         self.window?.backgroundColor = .white
         window.makeKeyAndVisible()

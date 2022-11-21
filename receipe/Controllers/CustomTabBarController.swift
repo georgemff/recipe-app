@@ -34,12 +34,16 @@ class CustomTabBarController: UITabBarController {
     
     
     func setUpVCs() {
+        
+        let profileController: UIViewController = Auth().isAuth ? ProfileViewController() : AuthViewController()
 
         viewControllers = [
             createNavController(for: HomeViewController(), title: "Home", image: UIImage(systemName: "house.fill")!),
             createNavController(for: EmptyViewController(), title: nil, image: nil),
-            createNavController(for: ProfileViewController(), title: "Profile", image: UIImage(systemName: "person.crop.circle")!),
+            createNavController(for: profileController, title: "Profile", image: UIImage(systemName: "person.crop.circle")!),
         ]
+        
+        self.tabBar.layoutIfNeeded()
         
         
     }
