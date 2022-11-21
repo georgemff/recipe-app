@@ -8,5 +8,5 @@
 import Foundation
 
 struct Auth {
-    var isAuth: Bool = true
+    var isAuth: Bool = false
 }

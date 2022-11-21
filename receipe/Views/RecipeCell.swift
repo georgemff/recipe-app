@@ -34,7 +34,7 @@ class RecipeCell: UIView {
     
     private func setUpCell() {
         self.translatesAutoresizingMaskIntoConstraints = false
-        self.heightAnchor.constraint(greaterThanOrEqualToConstant: 100).isActive = true
+//        self.heightAnchor.constraint(greaterThanOrEqualToConstant: 100).isActive = true
         
         let image = UIImage(named: imageName ?? "")
         let imageView = UIImageView(image: image)

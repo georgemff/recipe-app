@@ -158,7 +158,6 @@ extension HomeViewController {
         stackView.addArrangedSubview(recipesView)
         recipesView.translatesAutoresizingMaskIntoConstraints = false;
         
-        
         let hotRecipesLabel = createViewTitleLabel(title: "Hot Recipes")
         recipesView.addSubview(hotRecipesLabel)
         
@@ -178,10 +177,12 @@ extension HomeViewController {
         recipesStack.spacing = 10
         recipesStack.alignment = .fill
         
+        
         NSLayoutConstraint.activate([
             recipesStack.topAnchor.constraint(equalTo: hotRecipesLabel.bottomAnchor, constant: 10),
             recipesStack.leadingAnchor.constraint(equalTo: recipesView.leadingAnchor, constant: 10),
             recipesStack.trailingAnchor.constraint(equalTo: recipesView.trailingAnchor, constant: -10),
+            recipesStack.bottomAnchor.constraint(equalTo: recipesView.bottomAnchor, constant: -10)
         ])
         
         [
