@@ -34,10 +34,7 @@ class RegisterViewController: UIViewController {
         setUpForm()
         setUpLoginButton()
     }
-    
-    @objc func dismissVC() {
-        self.dismiss(animated: true)
-    }
+
     
 }
 
@@ -159,39 +156,42 @@ extension RegisterViewController {
     
     func setUpLoginButton() {
         loginButton = UIButton()
-        let registerHereText = UILabel()
-        registerHereText.translatesAutoresizingMaskIntoConstraints = false
-        registerHereText.text = "Already have an account?"
+        let haveAccountText = UILabel()
+        haveAccountText.translatesAutoresizingMaskIntoConstraints = false
+        haveAccountText.text = "Already have an account?"
         
-        let registerHereStack = UIStackView(arrangedSubviews: [
-            registerHereText,
+        let haveAccountStack = UIStackView(arrangedSubviews: [
+            haveAccountText,
             loginButton
         ])
         
-        registerHereStack.translatesAutoresizingMaskIntoConstraints = false
+        haveAccountStack.translatesAutoresizingMaskIntoConstraints = false
         
-        registerHereStack.axis = .horizontal
-        registerHereStack.alignment = .fill
-        registerHereStack.distribution = .fill
-        registerHereStack.spacing = 5
+        haveAccountStack.axis = .horizontal
+        haveAccountStack.alignment = .fill
+        haveAccountStack.distribution = .fill
+        haveAccountStack.spacing = 5
         
-        formView.addSubview(registerHereStack)
+        formView.addSubview(haveAccountStack)
         
         
         NSLayoutConstraint.activate([
-            registerHereStack.leadingAnchor.constraint(equalTo: formView.leadingAnchor, constant: 10),
-            registerHereStack.topAnchor.constraint(equalTo: formStack.bottomAnchor, constant: 30)
+            haveAccountStack.leadingAnchor.constraint(equalTo: formView.leadingAnchor, constant: 10),
+            haveAccountStack.topAnchor.constraint(equalTo: formStack.bottomAnchor, constant: 20),
+            haveAccountStack.bottomAnchor.constraint(equalTo: formView.bottomAnchor, constant: 0)
         ])
         
         loginButton.translatesAutoresizingMaskIntoConstraints = false
         loginButton.setTitle("Login", for: .normal)
         loginButton.setTitleColor(K.primaryColor, for: .normal)
-        loginButton.setTitleColor(.gray, for: .focused)
-        loginButton.heightAnchor.constraint(equalToConstant: 21).isActive = true
         loginButton.backgroundColor = .none
-        
         loginButton.addTarget(self, action: #selector(dismissVC), for: .touchUpInside)
         
+    }
+    
+    
+    @objc func dismissVC() {
+        self.dismiss(animated: true)
     }
 }
 

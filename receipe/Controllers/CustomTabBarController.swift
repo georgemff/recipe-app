@@ -20,7 +20,7 @@ class CustomTabBarController: UITabBarController {
         setValue(CustomTabBar(), forKey: "tabBar")
         guard let tabBar = self.tabBar as? CustomTabBar else {return}
         tabBar.didTapButton = { [unowned self] in
-            self.testFunc()
+            self.middleButtonPressed()
         }
         
         view.backgroundColor = .white
@@ -30,8 +30,13 @@ class CustomTabBarController: UITabBarController {
         setUpVCs()
     }
     
-    func testFunc() {
-        print("TESTTTT")
+    func middleButtonPressed() {
+        if !authModel.isAuth {
+            let vc = AuthViewController()
+            
+            vc.modalPresentationStyle = .pageSheet
+            self.present(vc, animated: true)
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
