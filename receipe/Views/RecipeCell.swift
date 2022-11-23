@@ -13,7 +13,6 @@ class RecipeCell: UIView {
     var title: String?
     var descriptionText: String?
     
-    
     override init(frame: CGRect) {
         fatalError("init(frame:) has not been implemented")
 

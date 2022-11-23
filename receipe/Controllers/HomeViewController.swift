@@ -12,41 +12,26 @@ class HomeViewController: UIViewController {
     
     var topViewSearchBackground = UIView()
     var searchBar = UISearchBar()
-    
     var stackView = UIStackView()
     
+    var trendsCollectionView: UICollectionView!
+    var recipesTableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.title = nil
-        // Do any additional setup after loading the view.
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setUpSearchBar()
-        
-        view.addSubview(stackView)
-        
-        
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            stackView.topAnchor.constraint(equalTo: topViewSearchBackground.bottomAnchor, constant: 0),
-            stackView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
-            stackView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -10),
-            stackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
-        ])
-        
-        
-        stackView.alignment = .fill
-        stackView.distribution = .fillEqually
-        stackView.axis = .vertical
-        stackView.spacing = 70
-        
-        
+        setUpCollectionView()
+        setUpStackView()
         setUpTrends()
+        setUpRecipesTableView()
         setUpHotRecipes()
     }
+    
     
     @objc func logInOrRegister() {
         print("He")
@@ -65,6 +50,48 @@ class HomeViewController: UIViewController {
 
 //MARK: - Set Up UI
 extension HomeViewController {
+    
+    func setUpCollectionView() {
+        
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        layout.minimumLineSpacing = 0
+        trendsCollectionView = UICollectionView(frame: CGRectZero, collectionViewLayout: layout)
+        trendsCollectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "trendsCell")
+        trendsCollectionView.isPagingEnabled = true
+        trendsCollectionView.showsHorizontalScrollIndicator = false
+        trendsCollectionView.clipsToBounds = false
+        trendsCollectionView.dataSource = self
+        trendsCollectionView.delegate = self
+    }
+    
+    func setUpStackView() {
+        view.addSubview(stackView)
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.alignment = .fill
+        stackView.distribution = .fillEqually
+        stackView.axis = .vertical
+        stackView.spacing = 70
+        
+        NSLayoutConstraint.activate([
+            stackView.topAnchor.constraint(equalTo: topViewSearchBackground.bottomAnchor, constant: 0),
+            stackView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
+            stackView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -10),
+            stackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+        ])
+    }
+    
+    func setUpRecipesTableView() {
+        recipesTableView = UITableView()
+        recipesTableView.dataSource = self
+        recipesTableView.delegate = self
+        
+        recipesTableView.register(UITableViewCell.self, forCellReuseIdentifier: "recipeCell")
+        recipesTableView.separatorStyle = .none
+        recipesTableView.showsVerticalScrollIndicator = false
+        recipesTableView.rowHeight = 100
+//        recipesTableView.contentInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+    }
     
     func setUpSearchBar() {
         topViewSearchBackground.addSubview(searchBar)
@@ -109,7 +136,10 @@ extension HomeViewController {
     
     
     func setUpTrends() {
+        
         let trendView = createTrendView()
+        
+       
         let trendsTitleLabel = createViewTitleLabel(title: "Trends")
         trendView.addSubview(trendsTitleLabel)
         NSLayoutConstraint.activate([
@@ -119,13 +149,14 @@ extension HomeViewController {
             trendsTitleLabel.trailingAnchor.constraint(equalTo: trendView.trailingAnchor, constant: -10)
         ])
         
-        let trend = Trends(imageName: "pizza", trendTitle: "Trend Title", complexityLabel: "Quick", review: "4.5", duration: "25", complexity: "Easy")
-        trendView.addSubview(trend)
+        trendView.addSubview(trendsCollectionView)
+        trendsCollectionView.translatesAutoresizingMaskIntoConstraints = false
+        
         NSLayoutConstraint.activate([
-            trend.topAnchor.constraint(equalTo: trendsTitleLabel.bottomAnchor, constant: 10),
-            trend.leadingAnchor.constraint(equalTo: trendView.leadingAnchor),
-            trend.trailingAnchor.constraint(equalTo: trendView.trailingAnchor),
-            trend.bottomAnchor.constraint(equalTo: trendView.bottomAnchor)
+            trendsCollectionView.leadingAnchor.constraint(equalTo: trendView.leadingAnchor),
+            trendsCollectionView.topAnchor.constraint(equalTo: trendsTitleLabel.bottomAnchor),
+            trendsCollectionView.trailingAnchor.constraint(equalTo: trendView.trailingAnchor),
+            trendsCollectionView.bottomAnchor.constraint(equalTo: trendView.bottomAnchor),
         ])
         
         
@@ -155,36 +186,16 @@ extension HomeViewController {
             hotRecipesLabel.topAnchor.constraint(equalTo: recipesView.topAnchor, constant: 0),
             hotRecipesLabel.trailingAnchor.constraint(equalTo: recipesView.trailingAnchor, constant: -10)
         ])
-        let recipesStack = UIStackView()
-        recipesView.addSubview(recipesStack)
         
-        recipesStack.translatesAutoresizingMaskIntoConstraints = false
-        recipesStack.axis = .vertical
-        recipesStack.distribution = .fillEqually
-        recipesStack.spacing = 10
-        recipesStack.alignment = .fill
-        
+        recipesView.addSubview(recipesTableView)
+        recipesTableView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            recipesStack.topAnchor.constraint(equalTo: hotRecipesLabel.bottomAnchor, constant: 10),
-            recipesStack.leadingAnchor.constraint(equalTo: recipesView.leadingAnchor, constant: 10),
-            recipesStack.trailingAnchor.constraint(equalTo: recipesView.trailingAnchor, constant: -10),
-            recipesStack.bottomAnchor.constraint(equalTo: recipesView.bottomAnchor, constant: -10)
+            recipesTableView.topAnchor.constraint(equalTo: hotRecipesLabel.bottomAnchor, constant: 10),
+            recipesTableView.leadingAnchor.constraint(equalTo: recipesView.leadingAnchor),
+            recipesTableView.trailingAnchor.constraint(equalTo: recipesView.trailingAnchor),
+            recipesTableView.bottomAnchor.constraint(equalTo: recipesView.bottomAnchor, constant: -10),
         ])
-        
-        [
-            RecipeCell(image: "pasta", title: "Pasta", description: "Some Pasta Recipe Description"),
-            RecipeCell(image: "pizza", title: "Pizza", description: "Some Pizza Recipe Description")
-        ].forEach{recipesStack.addArrangedSubview($0)}
-        
-        recipesStack.arrangedSubviews.forEach {
-            NSLayoutConstraint.activate([
-                $0.leadingAnchor.constraint(equalTo: recipesStack.leadingAnchor, constant: 0),
-                $0.trailingAnchor.constraint(equalTo: recipesStack.trailingAnchor, constant: 0)
-            ])
-            $0.isUserInteractionEnabled = true
-            $0.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.cellTapped(_:))))
-        }
         
     }
     
@@ -208,3 +219,80 @@ extension HomeViewController {
     }
 }
 
+extension HomeViewController: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+            return 10
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "trendsCell", for: indexPath)
+        cell.clipsToBounds = false
+        cell.backgroundColor = .none
+        var trend: Trends
+        
+        if indexPath.row % 2 == 0 {
+            trend = Trends(imageName: "pizza", trendTitle: "Best Pizza", complexityLabel: "Medium", review: "4.5", duration: "60", complexity: "Medium")
+        } else {
+            trend = Trends(imageName: "pasta", trendTitle: "Best Pasta", complexityLabel: "Quick", review: "4.5", duration: "15", complexity: "Easy")
+        }
+        
+        cell.addSubview(trend)
+        NSLayoutConstraint.activate([
+            trend.leadingAnchor.constraint(equalTo: cell.leadingAnchor),
+            trend.topAnchor.constraint(equalTo: cell.topAnchor),
+            trend.trailingAnchor.constraint(equalTo: cell.trailingAnchor),
+            trend.bottomAnchor.constraint(equalTo: cell.bottomAnchor)
+        ])
+        return cell
+    }
+}
+
+extension HomeViewController: UICollectionViewDelegate {
+    
+}
+
+extension HomeViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: collectionView.frame.width, height: collectionView.frame.height)
+    }
+}
+
+extension HomeViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 10
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "recipeCell", for: indexPath)
+        cell.selectionStyle = .none
+        for v in cell.subviews {
+            v.removeFromSuperview()
+        }
+        
+        let recipe: RecipeCell
+        
+        if indexPath.row % 2 == 0 {
+            recipe = RecipeCell(image: "pasta", title: "Pasta", description: "Some Pasta Recipe Description")
+        } else {
+            recipe = RecipeCell(image: "pizza", title: "Pizza", description: "Some Pizza Recipe Description")
+        }
+        
+        cell.addSubview(recipe)
+        NSLayoutConstraint.activate([
+            recipe.leadingAnchor.constraint(equalTo: cell.leadingAnchor),
+            recipe.topAnchor.constraint(equalTo: cell.topAnchor, constant: 5),
+            recipe.trailingAnchor.constraint(equalTo: cell.trailingAnchor),
+            recipe.bottomAnchor.constraint(equalTo: cell.bottomAnchor, constant: -5)
+        ])
+        return cell
+    }
+    
+    
+}
+
+
+extension HomeViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print(indexPath.row)
+    }
+}

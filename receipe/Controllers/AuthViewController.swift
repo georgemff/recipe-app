@@ -26,6 +26,7 @@ class AuthViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.title = nil
+        view.backgroundColor = .white
         setUpUI()
         
     }
@@ -165,17 +166,15 @@ extension AuthViewController {
 
         formView.addSubview(registerHereStack)
         
-        
         NSLayoutConstraint.activate([
             registerHereStack.leadingAnchor.constraint(equalTo: formView.leadingAnchor, constant: 10),
-            registerHereStack.topAnchor.constraint(equalTo: formStack.bottomAnchor, constant: 30)
+            registerHereStack.topAnchor.constraint(equalTo: formStack.bottomAnchor, constant: 20)
         ])
         
         registerButton.translatesAutoresizingMaskIntoConstraints = false
         registerButton.setTitle("Register", for: .normal)
         registerButton.setTitleColor(K.primaryColor, for: .normal)
-        registerButton.setTitleColor(.gray, for: .focused)
-        registerButton.heightAnchor.constraint(equalToConstant: 21).isActive = true
+//        registerButton.heightAnchor.constraint(equalToConstant: 21).isActive = true
         registerButton.backgroundColor = .none
         
         addGestureToButton()

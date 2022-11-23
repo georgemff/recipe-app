@@ -42,12 +42,11 @@ class Trends: UIView {
         
         let image = UIImage(named: self.imageName!)
         let imageView = UIImageView(image: image)
-        
+        imageView.contentMode = .scaleAspectFill
         self.addSubview(imageView)
         imageView.clipsToBounds = true
         imageView.layer.cornerRadius = 25
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        
         NSLayoutConstraint.activate([
             imageView.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
             imageView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 10),
