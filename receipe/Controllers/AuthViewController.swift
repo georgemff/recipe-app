@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 class AuthViewController: UIViewController {
     
@@ -138,6 +139,8 @@ extension AuthViewController {
         loginButton.layer.masksToBounds = true
         loginButton.layer.cornerRadius = 10
         
+        loginButton.addTarget(self, action: #selector(loginButtonPressed), for: .touchUpInside)
+        
         
     }
     
@@ -196,5 +199,14 @@ extension AuthViewController {
         registerVC.modalPresentationStyle = .pageSheet
         self.present(registerVC, animated: true)
         
+    }
+    
+    @objc func loginButtonPressed(_ target: UIButton) {
+        FirebaseAuth.Auth.auth().signIn(withEmail: userNameInput.text!, password: passwordInput.text!) {result, error in
+            if let e = error {
+                print(e.localizedDescription)
+                return
+            }
+        }
     }
 }

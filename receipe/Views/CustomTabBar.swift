@@ -9,6 +9,7 @@ import UIKit
 
 class CustomTabBar: UITabBar {
     
+    var didTapButton: (() -> ())?
     var middleButton: UIButton!
     
     
@@ -83,12 +84,22 @@ class CustomTabBar: UITabBar {
         middleButton.tintColor = .white
         middleButton.layer.cornerRadius = middleButton.frame.width / 2
         middleButton.center = CGPoint(x: self.frame.width / 2, y: middleButton.frame.height - (middleButton.frame.height / 2) - 3)
-        
+        middleButton.addTarget(self, action: #selector(middleButtonPressed), for: .touchUpInside)
         self.addSubview(middleButton)
+    }
+    
+    @objc func middleButtonPressed(_ sender: UIButton) {
+        self.didTapButton?()
     }
     
     private func radian(_ number: Double) -> Double {
         return number * .pi / 180
     }
+    
+    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+            guard !clipsToBounds && !isHidden && alpha > 0 else { return nil }
+            
+            return self.middleButton.frame.contains(point) ? self.middleButton : super.hitTest(point, with: event)
+        }
     
 }
