@@ -1,30 +1,27 @@
 //
-//  AuthViewController.swift
+//  RegisterViewController.swift
 //  receipe
 //
-//  Created by Giorgi Adeishvili on 22.11.22.
+//  Created by Giorgi Adeishvili on 23.11.22.
 //
 
 import UIKit
 
-class AuthViewController: UIViewController {
-    
+class RegisterViewController: UIViewController {
     var formView: UIView!
     var formStack: UIStackView!
     var authLabel: UILabel!
     var userNameInput: UITextField!
     var passwordInput: UITextField!
-    var registerButton: UIButton!
+    var confirmPasswordInput: UITextField!
     var loginButton: UIButton!
+    var registerButton: UIButton!
     
-    var login = true
+    var dismissButton = UIButton()
     
-    var loginView = UIView()
-    var registerView = UIView()
-
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationItem.title = nil
+        self.view.backgroundColor = .white
         setUpUI()
         
     }
@@ -35,11 +32,14 @@ class AuthViewController: UIViewController {
             setUpForm()
             setUpRegisterButton()
     }
+    
+    @objc func dismissVC() {
+        self.dismiss(animated: true)
+    }
 
 }
 
-//MARK: - Log In UI
-extension AuthViewController {
+extension RegisterViewController {
     func setUpFormView() {
         formView = UIView()
         self.view.addSubview(formView)
@@ -54,7 +54,7 @@ extension AuthViewController {
         authLabel = UILabel()
         authLabel.translatesAutoresizingMaskIntoConstraints = false
         formView.addSubview(authLabel)
-        authLabel.text = "Login"
+        authLabel.text = "Register"
         let font: UIFont = .systemFont(ofSize: 30, weight: .bold)
         authLabel.font = font
         
@@ -85,10 +85,11 @@ extension AuthViewController {
         ])
         userNameInput = UITextField()
         passwordInput = UITextField()
+        confirmPasswordInput = UITextField()
         
-        loginButton = UIButton()
+        registerButton = UIButton()
         
-        [userNameInput, passwordInput].forEach {
+        [userNameInput, passwordInput, confirmPasswordInput].forEach {
             let padding = UIView(frame: CGRectMake(0, 0, 10, $0.frame.height))
             $0.leftView = padding
             $0.leftViewMode = .always
@@ -119,38 +120,41 @@ extension AuthViewController {
         userNameInput.textContentType = .username
         
         passwordInput.isSecureTextEntry = true
-        passwordInput.textContentType = .password
+        passwordInput.textContentType = .newPassword
         passwordInput.placeholder = "Password"
         
-       
+        confirmPasswordInput.isSecureTextEntry = true
+        confirmPasswordInput.textContentType = .newPassword
+        confirmPasswordInput.placeholder = "Confirm Password"
+        
+        
         
         formStack.addArrangedSubview(userNameInput)
         formStack.addArrangedSubview(passwordInput)
-        formStack.addArrangedSubview(loginButton)
+        formStack.addArrangedSubview(confirmPasswordInput)
+        formStack.addArrangedSubview(registerButton)
         
-        //Login Button Styles
-        loginButton.translatesAutoresizingMaskIntoConstraints = false
-        loginButton.setTitle("Login", for: .normal)
+        registerButton.translatesAutoresizingMaskIntoConstraints = false
+        registerButton.setTitle("Register", for: .normal)
         
-        loginButton.setTitleColor(.white, for: .normal)
-        loginButton.backgroundColor = K.primaryColor
-        loginButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        loginButton.layer.masksToBounds = true
-        loginButton.layer.cornerRadius = 10
-        
+        registerButton.setTitleColor(.white, for: .normal)
+        registerButton.backgroundColor = K.primaryColor
+        registerButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        registerButton.layer.masksToBounds = true
+        registerButton.layer.cornerRadius = 10
         
     }
     
     
     func setUpRegisterButton() {
-        registerButton = UIButton()
+        loginButton = UIButton()
         let registerHereText = UILabel()
         registerHereText.translatesAutoresizingMaskIntoConstraints = false
-        registerHereText.text = "Don't have an account?"
+        registerHereText.text = "Already have an account?"
         
         let registerHereStack = UIStackView(arrangedSubviews: [
                 registerHereText,
-                registerButton
+                loginButton
             ])
         
         registerHereStack.translatesAutoresizingMaskIntoConstraints = false
@@ -168,33 +172,14 @@ extension AuthViewController {
             registerHereStack.topAnchor.constraint(equalTo: formStack.bottomAnchor, constant: 30)
         ])
         
-        registerButton.translatesAutoresizingMaskIntoConstraints = false
-        registerButton.setTitle("Register", for: .normal)
-        registerButton.setTitleColor(K.primaryColor, for: .normal)
-        registerButton.setTitleColor(.gray, for: .focused)
-        registerButton.heightAnchor.constraint(equalToConstant: 21).isActive = true
-        registerButton.backgroundColor = .none
+        loginButton.translatesAutoresizingMaskIntoConstraints = false
+        loginButton.setTitle("Login", for: .normal)
+        loginButton.setTitleColor(K.primaryColor, for: .normal)
+        loginButton.setTitleColor(.gray, for: .focused)
+        loginButton.heightAnchor.constraint(equalToConstant: 21).isActive = true
+        loginButton.backgroundColor = .none
         
-        addGestureToButton()
-    }
-}
-
-//MARK: - Login Logic
-extension AuthViewController {
-    func addGestureToButton() {
-        registerButton.addTarget(self, action: #selector(registerButtonPressed), for: .touchUpInside)
-    }
-    
-    @objc func registerButtonPressed(_ target: UIButton) {
-        
-        target.alpha = 0.5
-        Timer.scheduledTimer(withTimeInterval: 0.1, repeats: false) { _ in
-            target.alpha = 1
-        }
-        
-        let registerVC = RegisterViewController()
-        registerVC.modalPresentationStyle = .pageSheet
-        self.present(registerVC, animated: true)
+        loginButton.addTarget(self, action: #selector(dismissVC), for: .touchUpInside)
         
     }
 }
