@@ -53,7 +53,7 @@ class CustomTabBarController: UITabBarController {
         navController.tabBarItem.title = title
         navController.tabBarItem.image = image
         rootViewController.navigationItem.title = title
-        tabBar.tintColor = .systemYellow
+        tabBar.tintColor = K.primaryColor
         
         return navController
     }

@@ -74,7 +74,7 @@ extension HomeViewController {
         topViewSearchBackground.clipsToBounds = true
         topViewSearchBackground.layer.cornerRadius = 25
         topViewSearchBackground.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
-        topViewSearchBackground.backgroundColor = .systemOrange
+        topViewSearchBackground.backgroundColor = K.primaryColor
         NSLayoutConstraint.activate([
             NSLayoutConstraint(item: topViewSearchBackground, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1.0, constant: 0),
             NSLayoutConstraint(item: topViewSearchBackground, attribute: .top, relatedBy: .equal, toItem: view, attribute: .top, multiplier: 1.0, constant: 0),

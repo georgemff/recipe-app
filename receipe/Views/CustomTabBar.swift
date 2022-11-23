@@ -79,7 +79,7 @@ class CustomTabBar: UITabBar {
         let image = UIImage(systemName: "plus", withConfiguration: config)!
         middleButton.imageView?.contentMode = .scaleToFill
         middleButton.setImage(image, for: .normal)
-        middleButton.backgroundColor =  .systemYellow
+        middleButton.backgroundColor =  K.primaryColor
         middleButton.tintColor = .white
         middleButton.layer.cornerRadius = middleButton.frame.width / 2
         middleButton.center = CGPoint(x: self.frame.width / 2, y: middleButton.frame.height - (middleButton.frame.height / 2) - 3)
