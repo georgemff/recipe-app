@@ -9,4 +9,8 @@ import Foundation
 
 struct Auth {
     var isAuth: Bool = false
+    
+    mutating func setAuth(_ auth: Bool) {
+        isAuth = auth
+    }
 }

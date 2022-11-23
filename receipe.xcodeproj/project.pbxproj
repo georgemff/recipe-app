@@ -23,6 +23,7 @@
 		5EEAC7962922C97F00A8D72C /* AuthorizationButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EEAC7952922C97F00A8D72C /* AuthorizationButton.swift */; };
 		5EEAC7982922D0D200A8D72C /* Auth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EEAC7972922D0D200A8D72C /* Auth.swift */; };
 		5EEAC79B2922D35200A8D72C /* LoginRegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EEAC79A2922D35200A8D72C /* LoginRegisterViewController.swift */; };
+		5EF18F8F292E73EA003BB0B8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5EF18F8E292E73EA003BB0B8 /* GoogleService-Info.plist */; };
 		B2EBECF0BA5B18BC8F405552 /* Pods_receipe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5130F07F7A76989A1DB583F /* Pods_receipe.framework */; };
 /* End PBXBuildFile section */
 
@@ -45,6 +46,7 @@
 		5EEAC7952922C97F00A8D72C /* AuthorizationButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationButton.swift; sourceTree = "<group>"; };
 		5EEAC7972922D0D200A8D72C /* Auth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Auth.swift; sourceTree = "<group>"; };
 		5EEAC79A2922D35200A8D72C /* LoginRegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRegisterViewController.swift; sourceTree = "<group>"; };
+		5EF18F8E292E73EA003BB0B8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Desktop/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		6B1B0E058E19CE4A2C328C49 /* Pods-receipe.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-receipe.debug.xcconfig"; path = "Target Support Files/Pods-receipe/Pods-receipe.debug.xcconfig"; sourceTree = "<group>"; };
 		7BDED87FA62878B6E20FC974 /* Pods-receipe.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-receipe.release.xcconfig"; path = "Target Support Files/Pods-receipe/Pods-receipe.release.xcconfig"; sourceTree = "<group>"; };
 		D5130F07F7A76989A1DB583F /* Pods_receipe.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_receipe.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -115,6 +117,7 @@
 		5ED0ED1B2919AC8F00C61CB4 /* receipe */ = {
 			isa = PBXGroup;
 			children = (
+				5EF18F8E292E73EA003BB0B8 /* GoogleService-Info.plist */,
 				5E538D14292D83AE00DD0EA3 /* Constants */,
 				5EEAC7992922D22E00A8D72C /* Models */,
 				5ECC9B3C2921A62F00518A4B /* Views */,
@@ -215,6 +218,7 @@
 			files = (
 				5ED0ED292919AC9000C61CB4 /* LaunchScreen.storyboard in Resources */,
 				5ED0ED262919AC9000C61CB4 /* Assets.xcassets in Resources */,
+				5EF18F8F292E73EA003BB0B8 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -433,7 +437,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.georgemff.receipe;
+				PRODUCT_BUNDLE_IDENTIFIER = com.georgemff.recipe;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -462,7 +466,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.georgemff.receipe;
+				PRODUCT_BUNDLE_IDENTIFIER = com.georgemff.recipe;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;

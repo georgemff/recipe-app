@@ -6,12 +6,14 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 class RegisterViewController: UIViewController {
     var formView: UIView!
     var formStack: UIStackView!
     var authLabel: UILabel!
-    var userNameInput: UITextField!
+    var emailInput: UITextField!
+    var usernameInput: UITextField!
     var passwordInput: UITextField!
     var confirmPasswordInput: UITextField!
     var loginButton: UIButton!
@@ -27,16 +29,16 @@ class RegisterViewController: UIViewController {
     }
     
     func setUpUI() {
-       
-            setUpFormView()
-            setUpForm()
-            setUpRegisterButton()
+        
+        setUpFormView()
+        setUpForm()
+        setUpLoginButton()
     }
     
     @objc func dismissVC() {
         self.dismiss(animated: true)
     }
-
+    
 }
 
 extension RegisterViewController {
@@ -83,13 +85,15 @@ extension RegisterViewController {
             formStack.leadingAnchor.constraint(equalTo: formView.leadingAnchor, constant: 10),
             formStack.trailingAnchor.constraint(equalTo: formView.trailingAnchor, constant: -10)
         ])
-        userNameInput = UITextField()
+        
+        usernameInput = UITextField()
+        emailInput = UITextField()
         passwordInput = UITextField()
         confirmPasswordInput = UITextField()
         
         registerButton = UIButton()
         
-        [userNameInput, passwordInput, confirmPasswordInput].forEach {
+        [emailInput, usernameInput, passwordInput, confirmPasswordInput].forEach {
             let padding = UIView(frame: CGRectMake(0, 0, 10, $0.frame.height))
             $0.leftView = padding
             $0.leftViewMode = .always
@@ -116,8 +120,11 @@ extension RegisterViewController {
             $0.layer.shadowRadius = 3.0
         }
         
-        userNameInput.placeholder = "Username"
-        userNameInput.textContentType = .username
+        emailInput.placeholder = "Email"
+        emailInput.textContentType = .emailAddress
+        
+        usernameInput.placeholder = "Username"
+        usernameInput.textContentType = .username
         
         passwordInput.isSecureTextEntry = true
         passwordInput.textContentType = .newPassword
@@ -129,7 +136,8 @@ extension RegisterViewController {
         
         
         
-        formStack.addArrangedSubview(userNameInput)
+        formStack.addArrangedSubview(emailInput)
+        formStack.addArrangedSubview(usernameInput)
         formStack.addArrangedSubview(passwordInput)
         formStack.addArrangedSubview(confirmPasswordInput)
         formStack.addArrangedSubview(registerButton)
@@ -143,27 +151,30 @@ extension RegisterViewController {
         registerButton.layer.masksToBounds = true
         registerButton.layer.cornerRadius = 10
         
+        registerButton.addTarget(self, action: #selector(registerButtonPressed), for: .touchUpInside)
+
+        
     }
     
     
-    func setUpRegisterButton() {
+    func setUpLoginButton() {
         loginButton = UIButton()
         let registerHereText = UILabel()
         registerHereText.translatesAutoresizingMaskIntoConstraints = false
         registerHereText.text = "Already have an account?"
         
         let registerHereStack = UIStackView(arrangedSubviews: [
-                registerHereText,
-                loginButton
-            ])
+            registerHereText,
+            loginButton
+        ])
         
         registerHereStack.translatesAutoresizingMaskIntoConstraints = false
-
+        
         registerHereStack.axis = .horizontal
         registerHereStack.alignment = .fill
         registerHereStack.distribution = .fill
         registerHereStack.spacing = 5
-
+        
         formView.addSubview(registerHereStack)
         
         
@@ -181,5 +192,75 @@ extension RegisterViewController {
         
         loginButton.addTarget(self, action: #selector(dismissVC), for: .touchUpInside)
         
+    }
+}
+
+extension RegisterViewController {
+    
+    @objc func registerButtonPressed(_ target: UIButton) {
+        target.alpha = 0.5
+        
+        target.isUserInteractionEnabled = false
+        print(validateForm())
+        if !validateForm() {
+            target.alpha = 1
+            target.isUserInteractionEnabled = true
+            
+            return
+        }
+        
+        
+        FirebaseAuth.Auth.auth().createUser(withEmail: emailInput.text!, password: passwordInput.text!) {
+            (result, error) in
+            if let e = error {
+                print(e.localizedDescription)
+                target.alpha = 1
+                target.isUserInteractionEnabled = true
+                return
+            }
+            
+            let changesRequest = result?.user.createProfileChangeRequest()
+            changesRequest?.displayName = self.usernameInput.text!
+            changesRequest?.commitChanges() {
+                error in print(error?.localizedDescription)
+            }
+            
+            result?.user.sendEmailVerification() {
+                error in
+                print(error?.localizedDescription)
+                
+            }
+
+            self.dismissVC()
+        }
+    }
+    
+    func validateForm() -> Bool {
+        
+        if emailInput.text == nil ||
+            (emailInput.text != nil && emailInput.text!.isEmpty){
+            return false
+        }
+        
+        if usernameInput.text == nil ||
+            (usernameInput.text != nil &&  usernameInput.text!.isEmpty){
+            return false
+        }
+        
+        if passwordInput.text == nil ||
+            (passwordInput.text != nil &&  passwordInput.text!.isEmpty){
+            return false
+        }
+        
+        if confirmPasswordInput.text == nil ||
+            (confirmPasswordInput.text != nil &&  confirmPasswordInput.text!.isEmpty){
+            return false
+        }
+        
+        if passwordInput.text! != confirmPasswordInput.text! {
+            return false
+        }
+        
+        return true
     }
 }

@@ -6,21 +6,47 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 class CustomTabBarController: UITabBarController {
+    
+    var listener: AuthStateDidChangeListenerHandle!
+    var authModel = Auth()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        setValue(CustomTabBar(), forKey: "tabBar")
+        tabBar.isTranslucent = false
         delegate = self
+        setValue(CustomTabBar(), forKey: "tabBar")
+        guard let tabBar = self.tabBar as? CustomTabBar else {return}
+        tabBar.didTapButton = { [unowned self] in
+            self.testFunc()
+        }
+        
         view.backgroundColor = .white
-        UITabBar.appearance().barTintColor = .white
-        UITabBar.appearance().backgroundColor = .white
+        tabBar.barTintColor = .white
+        tabBar.backgroundColor = .white
         
         setUpVCs()
+    }
+    
+    func testFunc() {
+        print("TESTTTT")
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         
+        self.listener = FirebaseAuth.Auth.auth().addStateDidChangeListener { auth, user in
+                self.authModel.setAuth(!(user == nil))
+                self.setUpVCs()
+        }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        FirebaseAuth.Auth.auth().removeStateDidChangeListener(listener)
 
-        
     }
     
     override func overrideTraitCollection(forChild childViewController: UIViewController) -> UITraitCollection? {
@@ -35,7 +61,7 @@ class CustomTabBarController: UITabBarController {
     
     func setUpVCs() {
         
-        let profileController: UIViewController = Auth().isAuth ? ProfileViewController() : AuthViewController()
+        let profileController: UIViewController = authModel.isAuth ? ProfileViewController() : AuthViewController()
 
         viewControllers = [
             createNavController(for: HomeViewController(), title: "Home", image: UIImage(systemName: "house.fill")!),
